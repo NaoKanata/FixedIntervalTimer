@@ -1,5 +1,5 @@
 body {
-    background-color: #282c34;
+    background-color:beige;
 }
 
 .App {
@@ -30,6 +30,11 @@ body {
 
 .App-link {
   color: #61dafb;
+}
+
+.SliderContainer {
+    margin-left: 120px;
+    margin-right: 120px;
 }
 
 @keyframes App-logo-spin {

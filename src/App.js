@@ -1,46 +1,85 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Button from '@material-ui/core/Button';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import StopIcon from '@material-ui/icons/Stop';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Slider from '@material-ui/core/Slider';
+
+const marks = [
+    {
+      value: 5,
+      label: '5 min',
+    },
+    {
+      value: 10,
+      label: '10 min',
+    },
+    {
+      value: 15,
+      label: '15 min',
+    },
+    {
+        value: 20,
+        label: '20 min',
+    },
+    {
+        value: 30,
+        label: '30 min',
+    },
+    {
+        value: 60,
+        label: '60 min',
+    },
+    {
+        value: 120,
+        label: '120 min',
+    },
+];
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            anim: 0
+            isRunning: localStorage.getItem("isRunning") === "true",
         };
+        setInterval(() => {
+            let data = localStorage.getItem("isRunning");
+            this.setState({ isRunning: data === "true" });
+        }, 100);
     }
     render() {
-        let data = localStorage.getItem("isRunning");
         return(
             <div className="App">
-                { data !== "true" ? this._renderPlay() : this._renderStop() }
+                <p>Running</p>
+                <FormControlLabel
+                    control={<Switch checked={this.state.isRunning} onChange={this._onClick} name="checkedA" />}
+                    label={this.state.isRunning?"ON":"OFF"}
+                />
+                <p>Interval Time</p>
+                <div class="SliderContainer">
+                    <Slider
+                        defaultValue={20}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        step={5}
+                        marks={marks}
+                        min={5}
+                        max={120}
+                        onChange={this._changeValue}
+                    />
+                </div>
             </div>
         );
     }
 
-    _renderStop() {
-        return (
-            <Button variant="contained" color="primary" startIcon={<StopIcon />} onClick={this._onClick}>
-                Stop
-            </Button>
-        );
-    }
-
-    _renderPlay() {
-        return (
-            <Button variant="contained" color="primary" startIcon={<PlayArrowIcon />} onClick={this._onClick}>
-                START
-            </Button>
-        );
+    _changeValue = (event, newValue) => {
+        localStorage.setItem("interval", newValue);
     }
 
     _onClick = () => {
-        this.setState({ anim: 1 });
         let data = localStorage.getItem("isRunning");
         localStorage.setItem("isRunning", data === "true" ? "false" : "true");
+        this.setState({ isRunning: data !== "true" });
     }
 }
 
