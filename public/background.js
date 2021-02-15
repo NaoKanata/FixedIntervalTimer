@@ -9,7 +9,7 @@ stopIcon.src = './icon/38w/Stop.png';
 
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-ctx.fillStyle = "rgb(0,0,0,0.1)";
+ctx.fillStyle = "rgba(0,0,0,0)";
 
 var audio = new Audio("sound.mp3");
 
@@ -17,7 +17,7 @@ var rot = 5;
 
 function imageLoad(flag) {
     if (flag) {
-        ctx.fillRect(0, 0, 38, 38);
+        ctx.clearRect(0, 0, 38, 38);
         ctx.translate(19, 19);
         ctx.rotate(rot * Math.PI / 180);
         ctx.translate(-19, -19);

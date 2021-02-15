@@ -4,6 +4,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Slider from '@material-ui/core/Slider';
+import FooterComponent from './footer.js';
 
 const marks = [
     {
@@ -41,6 +42,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             isRunning: localStorage.getItem("isRunning") === "true",
+            interval: Number(localStorage.getItem("interval")),
         };
         setInterval(() => {
             let data = localStorage.getItem("isRunning");
@@ -58,7 +60,7 @@ class App extends React.Component {
                 <p>Interval Time</p>
                 <div class="SliderContainer">
                     <Slider
-                        defaultValue={20}
+                        defaultValue={this.state.interval}
                         aria-labelledby="discrete-slider"
                         valueLabelDisplay="auto"
                         step={5}
@@ -68,6 +70,8 @@ class App extends React.Component {
                         onChange={this._changeValue}
                     />
                 </div>
+                <div style={{marginTop: 100}}></div>
+                {FooterComponent('https://github.com/NaoKanata/FixedIntervalTimer')}
             </div>
         );
     }
